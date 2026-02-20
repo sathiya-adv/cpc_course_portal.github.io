@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CPC AI Smart Legal Index</title>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial; margin:0; background:#f4f6f9; }
+        header { background:#002147; color:white; padding:20px; text-align:center; }
+        section { padding:20px; }
+        input { width:70%; padding:12px; font-size:16px; }
+        button { padding:12px 20px; font-size:16px; background:#00509e; color:white; border:none; cursor:pointer; }
+        .card {
+            background:white;
+            padding:15px;
+            margin-bottom:15px;
+            border-left:5px solid #00509e;
+            box-shadow:0 2px 5px rgba(0,0,0,0.1);
+        }
+        footer { background:#002147; color:white; text-align:center; padding:10px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>CPC AI Smart Search Engine</h1>
+    <p>Search CPC Sections, Orders, Legal Terms</p>
+</header>
+
+<section>
+
+    <input type="text" id="searchBox"
+        placeholder="Example: Section 11, Order 7, Res Judicata, Decree">
+    
+    <button onclick="searchCPC()">Search</button>
+
+    <div id="results" style="margin-top:20px;"></div>
+
+</section>
+
+<script>
+
+// CPC DATABASE
+let cpcData = [
+
+{ section:"Section 2(2)", title:"Decree",
+description:"Formal expression of adjudication conclusively determining rights of parties." },
+
+{ section:"Section 2(9)", title:"Judgment",
+description:"Statement given by judge of grounds of decree or order." },
+
+{ section:"Section 9", title:"Jurisdiction of Civil Courts",
+description:"Courts shall try all suits of civil nature unless barred." },
+
+{ section:"Section 10", title:"Res Sub Judice",
+description:"No court shall proceed when matter is pending in previously instituted suit." },
+
+{ section:"Section 11", title:"Res Judicata",
+description:"Bars re-litigation of matters already decided by competent court." },
+
+{ section:"Section 80", title:"Notice against Government",
+description:"Mandatory notice before filing suit against Government." },
+
+{ section:"Section 96", title:"First Appeal",
+description:"Appeal from original decree unless barred." },
+
+{ section:"Section 100", title:"Second Appeal",
+description:"Appeal lies to High Court on substantial question of law." },
+
+{ section:"Order I", title:"Parties to Suit",
+description:"Rules relating to joinder and non-joinder of parties." },
+
+{ section:"Order VII", title:"Plaint",
+description:"Particulars required in plaint and rejection of plaint." },
+
+{ section:"Order VIII", title:"Written Statement",
+description:"Defendant must file written statement within prescribed time." },
+
+{ section:"Order XXI", title:"Execution of Decree",
+description:"Procedure for execution of decrees and orders." }
+
+];
+
+function searchCPC() {
+
+let input = document.getElementById("searchBox").value.toLowerCase();
+let output = "";
+
+let filtered = cpcData.filter(item =>
+item.section.toLowerCase().includes(input) ||
+item.title.toLowerCase().includes(input) ||
+item.description.toLowerCase().includes(input)
+);
+
+if(filtered.length > 0){
+
+filtered.forEach(item => {
+output += `
+<div class="card">
+<h3>${item.section} – ${item.title}</h3>
+<p>${item.description}</p>
+</div>
+`;
+});
+
+}
+else{
+output = "<h3>No Match Found</h3><p>Try another keyword.</p>";
+}
+
+document.getElementById("results").innerHTML = output;
+}
+
+</script>
+
+<footer>
+<p>© 2026 CPC AI Search Portal</p>
+</footer>
+
+</body>
+</html>
