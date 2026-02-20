@@ -42,20 +42,43 @@
 // CPC DATABASE
 let cpcData = [
 
-{ section:"Section 2(2)", title:"Decree",
-description:"Formal expression of adjudication conclusively determining rights of parties." },
+let cpcData = [
 
-{ section:"Section 2(9)", title:"Judgment",
-description:"Statement given by judge of grounds of decree or order." },
+{
+section:"Section 11",
+title:"Res Judicata",
+description:"Bars re-litigation of matters already decided by competent court.",
+unit:"Unit II - Jurisdiction",
+reading:"Refer Bare Act + Takwani Chapter on Res Judicata",
+quiz:"Attempt Unit II Quiz",
+related:"See also Section 10 (Res Sub Judice)"
+},
+
+{
+section:"Section 2(2)",
+title:"Decree",
+description:"Formal expression of adjudication conclusively determining rights.",
+unit:"Unit I - Definitions",
+reading:"Refer Bare Act + M.P. Jain Chapter on Decree",
+quiz:"Attempt Unit I Quiz",
+related:"See also Section 2(9) – Judgment"
+},
+
+{
+section:"Order XXI",
+title:"Execution of Decree",
+description:"Procedure for execution of decrees and orders.",
+unit:"Unit IV - Execution",
+reading:"Refer Bare Act + Execution chapter",
+quiz:"Attempt Unit IV Quiz",
+related:"See also Section 144 – Restitution"
+}
 
 { section:"Section 9", title:"Jurisdiction of Civil Courts",
 description:"Courts shall try all suits of civil nature unless barred." },
 
 { section:"Section 10", title:"Res Sub Judice",
 description:"No court shall proceed when matter is pending in previously instituted suit." },
-
-{ section:"Section 11", title:"Res Judicata",
-description:"Bars re-litigation of matters already decided by competent court." },
 
 { section:"Section 80", title:"Notice against Government",
 description:"Mandatory notice before filing suit against Government." },
@@ -75,9 +98,6 @@ description:"Particulars required in plaint and rejection of plaint." },
 { section:"Order VIII", title:"Written Statement",
 description:"Defendant must file written statement within prescribed time." },
 
-{ section:"Order XXI", title:"Execution of Decree",
-description:"Procedure for execution of decrees and orders." }
-
 ];
 
 function searchCPC() {
@@ -94,12 +114,26 @@ item.description.toLowerCase().includes(input)
 if(filtered.length > 0){
 
 filtered.forEach(item => {
+
 output += `
 <div class="card">
 <h3>${item.section} – ${item.title}</h3>
 <p>${item.description}</p>
+<p><strong>Mapped Unit:</strong> ${item.unit}</p>
+
+<hr>
+
+<p><strong>📘 Recommended Reading:</strong> ${item.reading}</p>
+<p><strong>📝 Suggested Self-Test:</strong> ${item.quiz}</p>
+<p><strong>🔁 Related Concept:</strong> ${item.related}</p>
+
+<p style="color:#b30000;">
+⚠ If this topic is weak, revise immediately before exams.
+</p>
+
 </div>
 `;
+
 });
 
 }
