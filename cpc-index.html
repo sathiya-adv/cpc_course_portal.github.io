@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CPC Smart Legal Index</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>CPC Smart Legal Index Engine</h1>
+    <p>Search Sections, Orders, Legal Terms</p>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="notes.html">Notes</a>
+    <a href="cpc-index.html">CPC AI Search</a>
+</nav>
+
+<section style="padding:20px;">
+
+    <input type="text" id="searchBox"
+           placeholder="Example: Section 11, Order 7, Res Judicata, Decree"
+           style="width:70%; padding:10px;">
+    
+    <button onclick="searchCPC()"
+            style="padding:10px 20px; background:#00509e; color:white;">
+        Search
+    </button>
+
+    <div id="results" style="margin-top:20px;"></div>
+
+</section>
+
+<script>
+
+// CPC DATABASE
+let cpcData = [
+
+{ section:"Section 2(2)", title:"Decree",
+description:"Formal expression of adjudication conclusively determining rights of parties.",
+unit:"Unit I - Definitions" },
+
+{ section:"Section 2(9)", title:"Judgment",
+description:"Statement given by judge on grounds of decree or order.",
+unit:"Unit I - Definitions" },
+
+{ section:"Section 9", title:"Jurisdiction of Civil Courts",
+description:"Courts shall try all suits of civil nature unless barred.",
+unit:"Unit II - Jurisdiction" },
+
+{ section:"Section 10", title:"Res Sub Judice",
+description:"No court shall proceed with trial of suit when matter is pending in previously instituted suit.",
+unit:"Unit II - Jurisdiction" },
+
+{ section:"Section 11", title:"Res Judicata",
+description:"Bars re-litigation of matters already decided by competent court.",
+unit:"Unit II - Jurisdiction" },
+
+{ section:"Section 80", title:"Notice against Government",
+description:"Mandatory notice before filing suit against Government.",
+unit:"Unit III - Special Suits" },
+
+{ section:"Section 96", title:"First Appeal",
+description:"Appeal from original decree unless expressly barred.",
+unit:"Unit III - Appeals" },
+
+{ section:"Section 100", title:"Second Appeal",
+description:"Appeal lies to High Court on substantial question of law.",
+unit:"Unit III - Appeals" },
+
+{ section:"Section 115", title:"Revision",
+description:"High Court may revise order where subordinate court exercised jurisdiction illegally.",
+unit:"Unit III - Revision" },
+
+{ section:"Section 144", title:"Restitution",
+description:"Court shall restore parties to original position when decree reversed.",
+unit:"Unit III - Restitution" },
+
+{ section:"Order I", title:"Parties to Suit",
+description:"Rules relating to joinder and non-joinder of parties.",
+unit:"Unit II" },
+
+{ section:"Order II", title:"Frame of Suit",
+description:"Every suit shall include whole claim arising from cause of action.",
+unit:"Unit II" },
+
+{ section:"Order VII", title:"Plaint",
+description:"Particulars required in a plaint and rejection of plaint.",
+unit:"Unit II" },
+
+{ section:"Order VIII", title:"Written Statement",
+description:"Defendant must file written statement within prescribed time.",
+unit:"Unit II" },
+
+{ section:"Order IX", title:"Appearance of Parties",
+description:"Consequences of non-appearance of parties.",
+unit:"Unit II" },
+
+{ section:"Order XX", title:"Judgment and Decree",
+description:"Pronouncement of judgment and preparation of decree.",
+unit:"Unit II" },
+
+{ section:"Order XXI", title:"Execution of Decree",
+description:"Procedure for execution of decrees and orders.",
+unit:"Unit IV - Execution" },
+
+{ section:"Order XXXVII", title:"Summary Suits",
+description:"Special procedure for summary suits in commercial matters.",
+unit:"Unit III" }
+
+];
+
+// SEARCH FUNCTION
+function searchCPC() {
+
+let input = document.getElementById("searchBox").value.toLowerCase();
+let output = "";
+
+let filtered = cpcData.filter(item =>
+item.section.toLowerCase().includes(input) ||
+item.title.toLowerCase().includes(input) ||
+item.description.toLowerCase().includes(input)
+);
+
+if(filtered.length > 0){
+
+filtered.forEach(item => {
+output += `
+<div style="background:#f4f4f4; padding:15px; margin-bottom:15px; border-left:5px solid #00509e;">
+<h3>${item.section} – ${item.title}</h3>
+<p>${item.description}</p>
+<p><strong>Mapped Unit:</strong> ${item.unit}</p>
+</div>
+`;
+});
+
+}
+else{
+output = "<h3>No Match Found</h3><p>Try another keyword.</p>";
+}
+
+document.getElementById("results").innerHTML = output;
+}
+
+</script>
+
+<footer>
+<p>© 2026 CPC Course Portal | Faculty: C.A. Sathiya</p>
+</footer>
+
+</body>
+</html>
