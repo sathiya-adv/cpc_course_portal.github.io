@@ -1,0 +1,18 @@
+{
+  "faqs": [
+    {
+      "id": 1,
+      "question": "What is the time limit for filing a civil suit under CPC?",
+      "answer": "Under the Limitation Act, 1963, the general time limit for filing a civil suit is 3 years from the date when the cause of action arises.",
+      "category": "Limitation",
+      "keywords": ["time limit", "filing", "limitation act"]
+    },
+    {
+      "id": 2,
+      "question": "What are the essential elements of a plaint under CPC?",
+      "answer": "A plaint must contain: 1) Name of court, 2) Name and description of parties, 3) Facts constituting cause of action, 4) Relief claimed, 5) Valuation of suit, 6) Verification clause.",
+      "category": "Plaint",
+      "keywords": ["plaint", "essential elements", "requirements"]
+    }
+  ]
+}
