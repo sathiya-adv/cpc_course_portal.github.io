@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPC Course FAQ Generator</title>
+    <link rel="stylesheet" href="faq-style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Civil Procedure Code (CPC) - FAQ Assistant</h1>
+        
+        <div class="search-section">
+            <input type="text" id="searchInput" placeholder="Ask about CPC topics, procedures, sections...">
+            <button onclick="searchFAQ()">Search FAQ</button>
+            <button onclick="generateNewFAQ()">Generate New FAQ</button>
+        </div>
+        
+        <div class="categories">
+            <button onclick="filterByCategory('all')">All Topics</button>
+            <button onclick="filterByCategory('Limitation')">Limitation</button>
+            <button onclick="filterByCategory('Plaint')">Plaint & Pleadings</button>
+            <button onclick="filterByCategory('Jurisdiction')">Jurisdiction</button>
+            <button onclick="filterByCategory('Appeals')">Appeals</button>
+        </div>
+        
+        <div id="faqResults" class="faq-container">
+            <!-- FAQs will be displayed here -->
+        </div>
+        
+        <div class="add-question">
+            <h3>Don't see your question? Add it!</h3>
+            <textarea id="newQuestion" placeholder="Enter your CPC-related question..."></textarea>
+            <button onclick="addNewQuestion()">Submit Question</button>
+        </div>
+    </div>
+    
+    <script src="faq-script.js"></script>
+</body>
+</html>
