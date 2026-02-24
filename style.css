@@ -34,7 +34,7 @@ body {
 }
 
 .main-nav a {
-    color: Dark Blue;
+    color: dark Blue;
     text-decoration: none;
     margin: 0 20px;
     font-size: 18px;
@@ -52,7 +52,7 @@ nav {
 }
 
 nav a {
-    color: Dark Blue;
+    color: white;
     margin: 15px;
     text-decoration: none;
     font-weight: bold;
