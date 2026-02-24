@@ -4,13 +4,24 @@ body {
     background-color: #f4f6f9;
 }
 
-header {
-    background-color: #002147;
-    color: white;
-    padding: 20px;
-    text-align: center;
+<style>
+.hero-header {
+    width: 100%;
+    overflow: hidden;
 }
 
+.hero-header img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Optional: Remove gap above image */
+body {
+    margin: 0;
+    padding: 0;
+}
+</style>
 nav {
     background-color: #00509e;
     padding: 10px;
