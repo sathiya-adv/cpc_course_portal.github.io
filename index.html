@@ -122,14 +122,15 @@ async function askAI() {
 
     if (!userMessage) return;
 
-    // Show User Message
+    // 1. Show User Message
     chatWindow.innerHTML += `<div style="text-align: right; margin-bottom: 10px;"><span style="background: #007bff; color: white; padding: 8px 12px; border-radius: 15px; display: inline-block; max-width: 80%;">${userMessage}</span></div>`;
     inputField.value = ""; 
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
-    // Updated API details for 2026
+    // 2. Corrected API Details
     const API_KEY = "AIzaSyAEbRDTkcRzQJeB_YeJQNV7Rfc4jVL2YB4"; 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+    // This URL is updated to use the stable v1 endpoint and gemini-1.5-flash
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
         const response = await fetch(url, {
@@ -148,19 +149,20 @@ async function askAI() {
 
         const data = await response.json();
         
+        // 3. Check for specific AI response
         if (data.candidates && data.candidates[0].content.parts[0].text) {
             const aiResponse = data.candidates[0].content.parts[0].text;
-            // Show AI Response
             chatWindow.innerHTML += `<div style="margin-bottom: 10px; text-align: left;"><span style="background: #e9ecef; color: #333; padding: 8px 12px; border-radius: 15px; display: inline-block; border: 1px solid #ddd; max-width: 80%;">${aiResponse}</span></div>`;
         } else {
-            throw new Error("Invalid Response");
+            // Handle cases where the API key might be restricted or invalid
+            throw new Error(data.error ? data.error.message : "Invalid Response");
         }
         
-        chatWindow.scrollTop = chatWindow.scrollHeight;
     } catch (error) {
-        console.error(error);
-        chatWindow.innerHTML += `<p style="color: red; font-size: 12px; text-align: center;">Error: AI is currently unavailable. Check your API key.</p>`;
+        console.error("Full Error Info:", error);
+        chatWindow.innerHTML += `<div style="text-align: center; margin: 10px 0;"><span style="color: red; font-size: 12px; background: #ffebeb; padding: 5px 10px; border-radius: 5px;">Error: ${error.message}</span></div>`;
     }
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 // Allow "Enter" key to send message
