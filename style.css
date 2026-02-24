@@ -6,8 +6,8 @@ body {
 
 <style>
 .hero-header {
+    position: relative;
     width: 100%;
-    overflow: hidden;
 }
 
 .hero-header img {
@@ -16,10 +16,21 @@ body {
     display: block;
 }
 
-/* Optional: Remove gap above image */
-body {
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    color: white;
+}
+
+.hero-text h1 {
+    font-size: 48px;
     margin: 0;
-    padding: 0;
+}
+
+.hero-text p {
+    font-size: 20px;
 }
 </style>
 nav {
