@@ -122,12 +122,15 @@ async function askAI() {
 
     if (!userMessage) return;
 
+    // Display message
     chatWindow.innerHTML += `<div style="text-align: right; margin-bottom: 10px;"><span style="background: #007bff; color: white; padding: 8px 12px; border-radius: 15px; display: inline-block; max-width: 80%;">${userMessage}</span></div>`;
     inputField.value = ""; 
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
-    // --- PASTE YOUR BRAND NEW KEY BELOW ---
+    // --- USE YOUR BRAND NEW KEY HERE ---
     const API_KEY = "AIzaSyCu0b5irENfOGE9eZ9I3O3eqEm-BIzPnK4"; 
+    
+    // This is the most stable 'v1beta' endpoint for Gemini 1.5 Flash
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
@@ -135,25 +138,21 @@ async function askAI() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{
-                    parts: [{
-                        text: `You are an expert on the Indian Civil Procedure Code. Answer this question for a law student: ${userMessage}`
-                    }]
-                }]
+                contents: [{ parts: [{ text: `You are a CPC law expert. Answer: ${userMessage}` }] }]
             })
         });
 
         const data = await response.json();
         
-        if (data.candidates && data.candidates[0].content.parts[0].text) {
+        if (data.candidates && data.candidates[0].content) {
             const aiResponse = data.candidates[0].content.parts[0].text;
             chatWindow.innerHTML += `<div style="margin-bottom: 10px; text-align: left;"><span style="background: #e9ecef; color: #333; padding: 8px 12px; border-radius: 15px; display: inline-block; border: 1px solid #ddd; max-width: 80%;">${aiResponse}</span></div>`;
         } else {
-            const errorMsg = data.error ? data.error.message : "Error: API response issue.";
-            throw new Error(errorMsg);
+            throw new Error(data.error ? data.error.message : "Connection failed");
         }
     } catch (error) {
-        chatWindow.innerHTML += `<div style="text-align: center; margin: 10px 0;"><span style="color: red; font-size: 11px; background: #ffebeb; padding: 5px; border-radius: 5px;">Status: ${error.message}</span></div>`;
+        // Show specific error to help us debug
+        chatWindow.innerHTML += `<div style="text-align: center; margin: 10px 0;"><span style="color: red; font-size: 11px;">Status: ${error.message}</span></div>`;
     }
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
