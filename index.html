@@ -122,15 +122,13 @@ async function askAI() {
 
     if (!userMessage) return;
 
-    // 1. Display User Message
     chatWindow.innerHTML += `<div style="text-align: right; margin-bottom: 10px;"><span style="background: #007bff; color: white; padding: 8px 12px; border-radius: 15px; display: inline-block; max-width: 80%;">${userMessage}</span></div>`;
     inputField.value = ""; 
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
-    // 2. UPDATED API DETAILS FOR 2026
-    const API_KEY = "AIzaSyAEbRDTkcRzQJeB_YeJQNV7Rfc4jVL2YB4"; 
-    // We are using 'gemini-2.0-flash' as it is the most stable for v1beta right now
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+    // --- PASTE YOUR BRAND NEW KEY BELOW ---
+    const API_KEY = "AIzaSyCu0b5irENfOGE9eZ9I3O3eqEm-BIzPnK4"; 
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
         const response = await fetch(url, {
@@ -139,9 +137,7 @@ async function askAI() {
             body: JSON.stringify({
                 contents: [{
                     parts: [{
-                        text: `System: You are an expert on the Indian Civil Procedure Code 1908. 
-                        User Question: "${userMessage}" 
-                        Instructions: Provide a clear, legal explanation suitable for a law student.`
+                        text: `You are an expert on the Indian Civil Procedure Code. Answer this question for a law student: ${userMessage}`
                     }]
                 }]
             })
@@ -149,19 +145,15 @@ async function askAI() {
 
         const data = await response.json();
         
-        // 3. Handle the response or show the specific error from Google
         if (data.candidates && data.candidates[0].content.parts[0].text) {
             const aiResponse = data.candidates[0].content.parts[0].text;
             chatWindow.innerHTML += `<div style="margin-bottom: 10px; text-align: left;"><span style="background: #e9ecef; color: #333; padding: 8px 12px; border-radius: 15px; display: inline-block; border: 1px solid #ddd; max-width: 80%;">${aiResponse}</span></div>`;
         } else {
-            // This displays the exact reason from Google (e.g., API key expired or model mismatch)
-            const errorMsg = data.error ? data.error.message : "Unexpected API response structure.";
+            const errorMsg = data.error ? data.error.message : "Error: API response issue.";
             throw new Error(errorMsg);
         }
-        
     } catch (error) {
-        console.error("Hackathon Debug Info:", error);
-        chatWindow.innerHTML += `<div style="text-align: center; margin: 10px 0;"><span style="color: red; font-size: 11px; background: #ffebeb; padding: 5px; border-radius: 5px;">API Status: ${error.message}</span></div>`;
+        chatWindow.innerHTML += `<div style="text-align: center; margin: 10px 0;"><span style="color: red; font-size: 11px; background: #ffebeb; padding: 5px; border-radius: 5px;">Status: ${error.message}</span></div>`;
     }
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
