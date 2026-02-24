@@ -130,7 +130,7 @@ async function askAI() {
     // 2. Corrected API Details
     const API_KEY = "AIzaSyAEbRDTkcRzQJeB_YeJQNV7Rfc4jVL2YB4"; 
     // This URL is updated to use the stable v1 endpoint and gemini-1.5-flash
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
         const response = await fetch(url, {
