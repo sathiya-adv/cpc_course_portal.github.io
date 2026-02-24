@@ -122,15 +122,15 @@ async function askAI() {
 
     if (!userMessage) return;
 
-    // 1. Show User Message
+    // Show User Message
     chatWindow.innerHTML += `<div style="text-align: right; margin-bottom: 10px;"><span style="background: #007bff; color: white; padding: 8px 12px; border-radius: 15px; display: inline-block; max-width: 80%;">${userMessage}</span></div>`;
     inputField.value = ""; 
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
-    // 2. Corrected API Details
+    // Updated API details for maximum compatibility
     const API_KEY = "AIzaSyAEbRDTkcRzQJeB_YeJQNV7Rfc4jVL2YB4"; 
-    // This URL is updated to use the stable v1 endpoint and gemini-1.5-flash
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    // Using 'gemini-1.5-flash-latest' often bypasses the "model not found" error
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
 
     try {
         const response = await fetch(url, {
@@ -140,8 +140,8 @@ async function askAI() {
                 contents: [{
                     parts: [{
                         text: `You are a legal expert on the Indian Civil Procedure Code (CPC). 
-                        A student from Sri Vijayanagar College is asking: "${userMessage}". 
-                        Answer accurately based on the Indian CPC 1908 and the LAW305 syllabus (Units 1-5).`
+                        A student is asking: "${userMessage}". 
+                        Answer accurately based on the Indian CPC 1908.`
                     }]
                 }]
             })
@@ -149,27 +149,23 @@ async function askAI() {
 
         const data = await response.json();
         
-        // 3. Check for specific AI response
         if (data.candidates && data.candidates[0].content.parts[0].text) {
             const aiResponse = data.candidates[0].content.parts[0].text;
             chatWindow.innerHTML += `<div style="margin-bottom: 10px; text-align: left;"><span style="background: #e9ecef; color: #333; padding: 8px 12px; border-radius: 15px; display: inline-block; border: 1px solid #ddd; max-width: 80%;">${aiResponse}</span></div>`;
-        } else {
-            // Handle cases where the API key might be restricted or invalid
-            throw new Error(data.error ? data.error.message : "Invalid Response");
+        } else if (data.error) {
+            // This will show the exact error message from Google in the chat for easier debugging
+            throw new Error(data.error.message);
         }
         
     } catch (error) {
-        console.error("Full Error Info:", error);
-        chatWindow.innerHTML += `<div style="text-align: center; margin: 10px 0;"><span style="color: red; font-size: 12px; background: #ffebeb; padding: 5px 10px; border-radius: 5px;">Error: ${error.message}</span></div>`;
+        console.error(error);
+        chatWindow.innerHTML += `<div style="text-align: center; margin: 10px 0;"><span style="color: red; font-size: 11px; background: #ffebeb; padding: 5px; border-radius: 5px;">AI Error: ${error.message}</span></div>`;
     }
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
-// Allow "Enter" key to send message
 document.getElementById("user-input").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-        askAI();
-    }
+    if (event.key === "Enter") { askAI(); }
 });
 </script>
 
