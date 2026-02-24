@@ -94,3 +94,23 @@ footer {
     text-align: center;
     padding: 10px;
 }
+/* =========================
+   FORCE CONTENT VISIBILITY FIX
+========================= */
+
+body, section, p, h2, ul, li {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+    color: #002147 !important;
+}
+
+section {
+    position: relative !important;
+    z-index: 1;
+}
+
+.hero-header {
+    position: relative;
+    z-index: 0;
+}
