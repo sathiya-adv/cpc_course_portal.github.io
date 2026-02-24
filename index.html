@@ -115,44 +115,54 @@
 </div>
 
 <script>
-async function askAI(question) {
+async function askAI() {
+    const inputField = document.getElementById("user-input");
+    const chatWindow = document.getElementById("chat-window");
+    const userMessage = inputField.value.trim();
 
-    console.log("AI FUNCTION UPDATED");
+    if (!userMessage) return;
 
-    const API_KEY = "AIzaSyCu0b5irENfOGE9eZ9I3O3eqEm-BIzPnK4";
+    // Show User Message
+    chatWindow.innerHTML += `<div style="text-align: right; margin-bottom: 10px;"><span style="background: #007bff; color: white; padding: 8px 12px; border-radius: 15px; display: inline-block; max-width: 80%;">${userMessage}</span></div>`;
+    inputField.value = ""; 
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
+    // --- PASTE YOUR BRAND NEW KEY BELOW ---
+    const API_KEY = "AIzaSyCu0b5irENfOGE9eZ9I3O3eqEm-BIzPnK4"; 
+    
+    // Updated to Gemini 2.0 Flash for 2026 stability
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
     try {
-
         const response = await fetch(url, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 contents: [{
                     parts: [{
-                        text: question
+                        text: `You are a legal expert on the Indian Civil Procedure Code (CPC). Answer this: ${userMessage}`
                     }]
                 }]
             })
         });
 
         const data = await response.json();
-        console.log("Response:", data);
-
-        if (!response.ok) {
-            throw new Error(data.error.message);
+        
+        if (data.candidates && data.candidates[0].content) {
+            const aiResponse = data.candidates[0].content.parts[0].text;
+            chatWindow.innerHTML += `<div style="margin-bottom: 10px; text-align: left;"><span style="background: #e9ecef; color: #333; padding: 8px 12px; border-radius: 15px; display: inline-block; border: 1px solid #ddd; max-width: 80%;">${aiResponse}</span></div>`;
+        } else {
+            // Show the exact error message from Google to help us
+            const msg = data.error ? data.error.message : "Unkown Error";
+            throw new Error(msg);
         }
-
-        return data.candidates[0].content.parts[0].text;
-
     } catch (error) {
-        console.error("Gemini Error:", error);
-        return "AI temporarily unavailable.";
+        chatWindow.innerHTML += `<div style="text-align: center; margin: 10px 0;"><span style="color: red; font-size: 11px; background: #ffebeb; padding: 5px; border-radius: 5px;">System Status: ${error.message}</span></div>`;
     }
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 }
+
+document.getElementById("user-input").addEventListener("keypress", (e) => { if (e.key === "Enter") askAI(); });
 </script>
     
 </body>
