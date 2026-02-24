@@ -7,6 +7,7 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #f4f6f9;
+    color: #002147;   /* Default text color */
 }
 
 /* =========================
@@ -31,13 +32,13 @@ body {
 ========================= */
 
 .main-nav {
-    background-color: #002147;   /* Dark Blue */
+    background-color: #002147;
     padding: 15px 0;
     text-align: center;
 }
 
 .main-nav a {
-    color: white;                 /* Make text visible */
+    color: white;
     text-decoration: none;
     margin: 0 20px;
     font-size: 18px;
@@ -45,7 +46,7 @@ body {
 }
 
 .main-nav a:hover {
-    color: #f4c542;               /* Gold hover */
+    color: #f4c542;
 }
 
 /* =========================
@@ -63,7 +64,7 @@ section {
    HEADINGS
 ========================= */
 
-h1, h2 {
+h1, h2, h3 {
     color: #002147;
 }
 
@@ -92,25 +93,11 @@ footer {
     background-color: #002147;
     color: white;
     text-align: center;
-    padding: 10px;
-}
-/* =========================
-   FORCE CONTENT VISIBILITY FIX
-========================= */
-
-body, section, p, h2, ul, li {
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: block !important;
-    color: #002147 !important;
+    padding: 15px;
+    font-size: 15px;
 }
 
-section {
-    position: relative !important;
-    z-index: 1;
-}
-
-.hero-header {
-    position: relative;
-    z-index: 0;
+footer p {
+    margin: 0;
+    color: white;   /* Ensure footer text stays white */
 }
