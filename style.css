@@ -96,6 +96,50 @@ footer {
     padding: 15px;
     font-size: 15px;
 }
+/* ================= FILE LIBRARY ================= */
+
+.file-library {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.file-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 500px;
+    text-align: center;
+}
+
+.file-card p {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #00509e;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #003f7f;
+}
+
+.download-btn {
+    background-color: #198754;
+}
+
+.download-btn:hover {
+    background-color: #146c43;
+}
 
 footer p {
     margin: 0;
