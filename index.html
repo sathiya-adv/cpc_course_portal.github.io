@@ -189,44 +189,48 @@ ${question}
 </div>
 `;
 
-input.value="";
+input.value = "";
 chat.scrollTop = chat.scrollHeight;
 
 
-/* ======= PUT YOUR API KEY HERE ======= */
-const API_KEY = "AIzaSyBaf4lsKVmWMrllg-WiCRdhFyPhWv9iK0I";
+/* ======= PUT YOUR OPENAI API KEY HERE ======= */
+const API_KEY = "PASTE_OPENAI_API_KEY_HERE";
 
 
-const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.0-pro:generateContent?key=${API_KEY}`;
+const url = "https://api.openai.com/v1/chat/completions";
 
-try{
+try {
 
-const response = await fetch(url,{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
+const response = await fetch(url, {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+"Authorization": `Bearer ${API_KEY}`
 },
-body:JSON.stringify({
-contents:[
+body: JSON.stringify({
+model: "gpt-4o-mini",
+messages: [
 {
-parts:[
+role: "system",
+content: "You are an expert law professor explaining the Indian Civil Procedure Code (CPC) clearly for law students."
+},
 {
-text:`You are an expert law professor explaining the Indian Civil Procedure Code (CPC) clearly for law students.
-
-Question: ${question}`
+role: "user",
+content: question
 }
-]
-}
-]
+],
+temperature: 0.7
 })
 });
 
 const data = await response.json();
 
-let answer="Sorry, I couldn't generate an answer.";
+let answer = "Sorry, I couldn't generate an answer.";
 
-if(data.candidates){
-answer = data.candidates[0].content.parts[0].text;
+if (data.choices && data.choices[0].message.content) {
+answer = data.choices[0].message.content;
+} else if (data.error) {
+answer = "❌ " + data.error.message;
 }
 
 chat.innerHTML += `
@@ -237,11 +241,11 @@ ${answer}
 </div>
 `;
 
-}catch(err){
+} catch (err) {
 
 chat.innerHTML += `
 <div style="color:red;font-size:12px;margin:5px;">
-Error connecting to AI service
+Error connecting to OpenAI service
 </div>
 `;
 
@@ -252,8 +256,8 @@ chat.scrollTop = chat.scrollHeight;
 }
 
 
-document.getElementById("user-input").addEventListener("keypress",function(e){
-if(e.key==="Enter"){
+document.getElementById("user-input").addEventListener("keypress", function(e){
+if(e.key === "Enter"){
 askAI();
 }
 });
