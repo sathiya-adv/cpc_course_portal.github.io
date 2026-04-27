@@ -247,8 +247,12 @@ let answer = "Sorry, I couldn't generate an answer.";
 
 if (data.output && data.output[0]?.content?.[0]?.text) {
   answer = data.output[0].content[0].text;
-} else if (data.error) {
-  answer = "❌ " + data.error;
+} 
+else if (data.error) {
+  answer = "❌ " + (data.error.message || JSON.stringify(data.error));
+}
+else {
+  answer = "⚠️ Unexpected response format";
 }
 
 chat.innerHTML += `
