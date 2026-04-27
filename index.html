@@ -194,43 +194,61 @@ chat.scrollTop = chat.scrollHeight;
 
 
 /* ======= PUT YOUR OPENAI API KEY HERE ======= */
-const API_KEY = "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";
+// const API_KEY = "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";
 
 
-const url = "https://api.openai.com/v1/chat/completions";
+// const url = "https://api.openai.com/v1/chat/completions";
 
 try {
 
-const response = await fetch(url, {
-method: "POST",
-headers: {
-"Content-Type": "application/json",
-"Authorization": `Bearer ${API_KEY}`
-},
-body: JSON.stringify({
-model: "gpt-4o-mini",
-messages: [
-{
-role: "system",
-content: "You are an expert law professor explaining the Indian Civil Procedure Code (CPC) clearly for law students."
-},
-{
-role: "user",
-content: question
-}
-],
-temperature: 0.7
-})
+// const response = await fetch("/ask", {
+// method: "POST",
+// headers: {
+// "Content-Type": "application/json",
+// "Authorization": `Bearer ${API_KEY}`
+// },
+// body: JSON.stringify({
+// model: "gpt-4o-mini",
+// messages: [
+// {
+// role: "system",
+// content: "You are an expert law professor explaining the Indian Civil Procedure Code (CPC) clearly for law students."
+// },
+// {
+// role: "user",
+// content: question
+// }
+// ],
+// temperature: 0.7
+// })
+// });
+
+// const data = await response.json();
+
+// let answer = "Sorry, I couldn't generate an answer.";
+
+// if (data.choices && data.choices[0].message.content) {
+// answer = data.choices[0].message.content;
+// } else if (data.error) {
+// answer = "❌ " + data.error.message;
+// }
+
+    const response = await fetch("/api/ask", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ question })
 });
 
 const data = await response.json();
 
 let answer = "Sorry, I couldn't generate an answer.";
 
-if (data.choices && data.choices[0].message.content) {
-answer = data.choices[0].message.content;
+if (data.output && data.output[0]?.content?.[0]?.text) {
+  answer = data.output[0].content[0].text;
 } else if (data.error) {
-answer = "❌ " + data.error.message;
+  answer = "❌ " + data.error;
 }
 
 chat.innerHTML += `
